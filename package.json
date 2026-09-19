@@ -1,0 +1,13 @@
+{
+  "name": "cyberclash-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cyber Clash 2026 — root workspace runner",
+  "scripts": {
+    "build": "cd frontend && npm install --cache ./npm-cache && npm run build && cd ../backend && npm install --cache ./npm-cache",
+    "start": "cd backend && npm start",
+    "backend": "cd backend && npm start",
+    "frontend": "cd frontend && npm run dev",
+    "dev": "node -e \"const { spawn } = require('child_process'); spawn('npm', ['start'], { cwd: './backend', stdio: 'inherit', shell: true }); spawn('npm', ['run', 'dev'], { cwd: './frontend', stdio: 'inherit', shell: true });\""
+  }
+}
