@@ -88,7 +88,17 @@ export default function Landing() {
                   key={r.id}
                   className={`round-card ${r.status === "live" ? "live" : r.status === "locked" ? "locked" : ""}`}
                 >
-                  <div className="round-thumb" />
+                 <div className={`round-thumb round-thumb-${r.key}`} aria-hidden="true">
+                    <div className="round-visual">
+                      <div className="round-orbit round-orbit-one" />
+                      <div className="round-orbit round-orbit-two" />
+                      <div className="round-cube">
+                        <span className="round-cube-face round-cube-front" />
+                        <span className="round-cube-face round-cube-side" />
+                        <span className="round-cube-face round-cube-top" />
+                      </div>
+                    </div>
+                  </div>
                   <div className="round-body">
                     <div className="round-eyebrow">
                       <span>ROUND {r.order}</span>
