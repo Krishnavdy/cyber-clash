@@ -32,7 +32,7 @@ export default function Landing() {
     <div className="main">
       <div className="hero">
         <div className="container">
-          <div className="eyebrow">NATIONAL LEVEL CYBERSECURITY CHAMPIONSHIP</div>
+          <div className="eyebrow">CYBERSECURITY CHAMPIONSHIP</div>
           <h1>CYBER CLASH</h1>
           <div className="hero-sub">P.P. SAVANI UNIVERSITY · ENGINEERS DAY 2026</div>
 
