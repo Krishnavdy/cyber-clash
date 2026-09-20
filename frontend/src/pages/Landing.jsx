@@ -152,7 +152,10 @@ export default function Landing() {
         </div>
       </div>
 
-      <div className="footer-note">CYBER CLASH · ENGINEERS DAY 2026 · P.P. SAVANI UNIVERSITY</div>
+<div className="footer-note">
+        CYBER CLASH · ENGINEERS DAY 2026 · P.P. SAVANI UNIVERSITY
+        <Link to="/admin-login" className="footer-admin-link" aria-label="Organizer access" title="Organizer access">◈</Link>
+      </div>
     </div>
   );
 }
