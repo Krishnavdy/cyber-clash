@@ -15,7 +15,7 @@ const { nanoid } = require("nanoid");
 const fs = require("fs");
 
 const PORT = process.env.PORT || 4000;
-const ADMIN_PASSCODE = process.env.ADMIN_PASSCODE || "admin123";
+const ADMIN_PASSCODE = process.env.ADMIN_PASSCODE || "rendezvous";
 
 // ---------------------------------------------------------------------------
 // Persistence
