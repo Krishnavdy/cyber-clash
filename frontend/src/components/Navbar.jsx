@@ -31,11 +31,13 @@ export default function Navbar({ live }) {
             <span className="status-dot" />
             {live ? "LIVE" : "STANDBY"}
           </div>
-          {isTeam ? (
-  <Link to="/arena" className="btn btn-cyan">TEAM PANEL</Link>
-) : (
-  <Link to="/team-login" className="btn btn-primary">TEAM LOGIN</Link>
-)}
+          {isAdmin ? (
+            <Link to="/control-room" className="btn btn-cyan">ADMIN</Link>
+          ) : isTeam ? (
+            <Link to="/arena" className="btn btn-cyan">TEAM PANEL</Link>
+          ) : (
+            <Link to="/team-login" className="btn btn-primary">TEAM LOGIN</Link>
+          )}
         </div>
       </div>
     </div>
