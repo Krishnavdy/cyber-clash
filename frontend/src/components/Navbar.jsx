@@ -23,7 +23,7 @@ export default function Navbar({ live }) {
         <div className="nav-links">
           <Link to="/arena" className={pathname.startsWith("/arena") ? "active" : ""}>ARENA</Link>
           <Link to="/leaderboard" className={pathname === "/leaderboard" ? "active" : ""}>LEADERBOARD</Link>
-          <Link to="/control-room" className={pathname.startsWith("/control-room") ? "active" : ""}>CONTROL ROOM</Link>
+          
         </div>
 
         <div className="nav-right">
@@ -31,13 +31,11 @@ export default function Navbar({ live }) {
             <span className="status-dot" />
             {live ? "LIVE" : "STANDBY"}
           </div>
-          {isAdmin ? (
-            <Link to="/control-room" className="btn btn-cyan">ADMIN</Link>
-          ) : isTeam ? (
-            <Link to="/arena" className="btn btn-cyan">TEAM PANEL</Link>
-          ) : (
-            <Link to="/team-login" className="btn btn-primary">TEAM LOGIN</Link>
-          )}
+          {isTeam ? (
+  <Link to="/arena" className="btn btn-cyan">TEAM PANEL</Link>
+) : (
+  <Link to="/team-login" className="btn btn-primary">TEAM LOGIN</Link>
+)}
         </div>
       </div>
     </div>
