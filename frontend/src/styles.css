@@ -304,6 +304,7 @@ button, input, select, textarea { font-family: inherit; }
 .station-card.captured { border-color: var(--green); background: rgba(74,222,154,0.05); }
 
 .footer-note { text-align: center; color: var(--text-faint); font-family: var(--mono); font-size: 12px; padding: 30px 0; }
-
+.footer-admin-link { margin-left: 10px; color: var(--text-faint); font-size: 10px; opacity: 0.45; transition: color 0.15s, opacity 0.15s; }
+.footer-admin-link:hover, .footer-admin-link:focus-visible { color: var(--cyan); opacity: 1; }
 ::-webkit-scrollbar { height: 8px; width: 8px; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
