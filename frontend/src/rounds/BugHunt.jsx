@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { api } from "../api";
 
 export default function BugHunt({ roundId, isTimeUp }) {
+  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [explanations, setExplanations] = useState({});
   const [picked, setPicked] = useState({});
@@ -81,6 +83,9 @@ export default function BugHunt({ roundId, isTimeUp }) {
           </div>
         );
       })}
+      <button className="btn btn-cyan" style={{ width: "100%" }} onClick={() => navigate("/arena")}>
+        DASHBOARD
+      </button>
     </div>
   );
 }
