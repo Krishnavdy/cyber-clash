@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { api } from "../api";
 
 export default function CyberQuiz({ roundId, isTimeUp }) {
+  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -106,13 +108,18 @@ export default function CyberQuiz({ roundId, isTimeUp }) {
           ← PREV
         </button>
 
-        <button
-          className="btn btn-cyan"
-          disabled={current === data.questions.length - 1}
-          onClick={() => setCurrent((c) => Math.min(data.questions.length - 1, c + 1))}
-        >
-          NEXT →
-        </button>
+        {current === data.questions.length - 1 ? (
+          <button className="btn btn-cyan" onClick={() => navigate("/arena")}>
+            DASHBOARD
+          </button>
+        ) : (
+          <button
+            className="btn btn-cyan"
+            onClick={() => setCurrent((c) => Math.min(data.questions.length - 1, c + 1))}
+          >
+            NEXT →
+          </button>
+        )}
       </div>
     </div>
   );
