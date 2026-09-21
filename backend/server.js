@@ -221,7 +221,7 @@ function recordViolation(team, roundId, type) {
   let action = "reset";
   let status = fresh.status;
 
-  if (newViolations >= 4) {
+  if (newViolations >= 3) {
     action = "eliminated";
     status = "eliminated";
   }
@@ -256,8 +256,8 @@ function recordViolation(team, roundId, type) {
     action,
     message:
       action === "eliminated"
-        ? "Violation 4 — TERMINATED. Your team has been eliminated. Appeal at the control desk."
-        : `Violation ${newViolations}/3 — round progress reset.`,
+        ? "Violation 3 — TERMINATED. Your team has been eliminated. Appeal at the control desk."
+        : `Violation ${newViolations}/2 — round progress reset.`,
   });
   io.to("admin").emit("violation:new", {
     teamId: team.id,
@@ -483,7 +483,7 @@ app.get("/api/admin/overview", requireAdmin, (req, res) => {
 
 
 app.get("/api/admin/teams", requireAdmin, (req, res) => {
-  res.json(db.get("teams").value().map(publicTeam));
+  res.json(db.get("teams").value().map((team) => ({ ...publicTeam(team), passcode: team.passcode })));
 });
 
 app.post("/api/admin/teams", requireAdmin, (req, res) => {
