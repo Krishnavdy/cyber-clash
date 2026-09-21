@@ -5,7 +5,6 @@ import { socket } from "../socket";
 export default function Teams() {
   const [teams, setTeams] = useState([]);
   const [name, setName] = useState("");
-  const [lastPasscode, setLastPasscode] = useState(null);
 
   async function refresh() {
     setTeams(await api.getTeams());
@@ -20,8 +19,7 @@ export default function Teams() {
   async function addTeam(e) {
     e.preventDefault();
     if (!name.trim()) return;
-    const { passcode, team } = await api.addTeam(name.trim());
-    setLastPasscode({ name: team.name, passcode });
+    await api.addTeam(name.trim());
     setName("");
     refresh();
   }
@@ -36,15 +34,6 @@ export default function Teams() {
         <a className="btn" href={api.exportCsvUrl()} target="_blank" rel="noreferrer">⬇ EXPORT CSV</a>
       </div>
 
-      {lastPasscode && (
-        <div className="panel" style={{ marginBottom: 20, borderColor: "var(--green)" }}>
-          <span className="mono">
-            Passcode for <b>{lastPasscode.name}</b>: <span style={{ color: "var(--green)", fontSize: 16 }}>{lastPasscode.passcode}</span>
-          </span>{" "}
-          — share this with the team, it won't be shown again here.
-        </div>
-      )}
-
       <div className="cr-table-wrap">
         {teams.length === 0 ? (
           <div className="cr-empty">NO TEAMS REGISTERED YET</div>
@@ -52,7 +41,7 @@ export default function Teams() {
           <table className="cr-table">
             <thead>
               <tr>
-                <th>TEAM</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>BONUS</th><th>TOTAL</th><th>WARN</th><th>VIOL</th><th>STATUS</th><th>ACTIONS</th>
+                <th>TEAM</th><th>TEAM CODE</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>BONUS</th><th>TOTAL</th><th>WARN</th><th>VIOL</th><th>STATUS</th><th>ACTIONS</th>
               </tr>
             </thead>
             <tbody>
@@ -73,6 +62,7 @@ function TeamRow({ team, onChange }) {
   return (
     <tr>
       <td>{team.name}</td>
+      <td className="mono" style={{ color: "var(--cyan)", fontWeight: 700 }}>{team.passcode}</td>
       <td>{team.scores.r1}</td>
       <td>{team.scores.r2}</td>
       <td>{team.scores.r3}</td>
