@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { api } from "../api";
 
 export default function CyberDetective({ roundId, isTimeUp }) {
+  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [flags, setFlags] = useState({});
   const [wrongStation, setWrongStation] = useState(null);
+  const [currentStationIndex, setCurrentStationIndex] = useState(0);
 
   async function refresh() {
     const d = await api.getRoundContent(roundId);
@@ -15,16 +18,23 @@ export default function CyberDetective({ roundId, isTimeUp }) {
     refresh();
   }, [roundId]);
 
+  useEffect(() => {
+    if (data?.stations?.length) {
+      const firstUncaptured = data.stations.findIndex(
+        (station) => !data.captured.includes(station.id)
+      );
+      setCurrentStationIndex(firstUncaptured === -1 ? 0 : firstUncaptured);
+    }
+  }, [data]);
+
   if (!data) {
     return <div className="locked-screen">Loading round…</div>;
   }
 
   const timeExpired = Boolean(isTimeUp);
 
-  // Get the first station that has not been captured yet
-  const currentStation = data.stations.find(
-    (station) => !data.captured.includes(station.id)
-  );
+  const currentStation = data.stations[currentStationIndex];
+  const allCaptured = data.captured.length === data.stations.length;
 
   async function submit(stationId) {
     if (timeExpired) return;
@@ -62,7 +72,7 @@ export default function CyberDetective({ roundId, isTimeUp }) {
       </div>
 
       <div className="station-grid">
-        {currentStation ? (
+        {currentStation && !allCaptured ? (
           <div
             className="station-card"
             key={currentStation.id}
@@ -144,7 +154,7 @@ export default function CyberDetective({ roundId, isTimeUp }) {
                 fontFamily: "var(--mono)",
                 fontSize: 13,
               }}
-              placeholder="flag{...}"
+              placeholder=""
               value={flags[currentStation.id] || ""}
               onChange={(e) =>
                 setFlags((prev) => ({
@@ -177,6 +187,28 @@ export default function CyberDetective({ roundId, isTimeUp }) {
                 Incorrect flag string. Try again.
               </div>
             )}
+
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 12, marginTop: 14 }}>
+              <button
+                className="btn"
+                disabled={currentStationIndex === 0}
+                onClick={() => setCurrentStationIndex((index) => Math.max(0, index - 1))}
+              >
+                ← PREV
+              </button>
+              {currentStationIndex === data.stations.length - 1 ? (
+                <button className="btn btn-cyan" onClick={() => navigate("/arena")}>
+                  DASHBOARD
+                </button>
+              ) : (
+                <button
+                  className="btn btn-cyan"
+                  onClick={() => setCurrentStationIndex((index) => Math.min(data.stations.length - 1, index + 1))}
+                >
+                  NEXT →
+                </button>
+              )}
+            </div>
           </div>
         ) : (
           <div
@@ -188,6 +220,9 @@ export default function CyberDetective({ roundId, isTimeUp }) {
             }}
           >
             ✓ ALL FLAGS CAPTURED
+            <button className="btn btn-cyan" style={{ width: "100%", marginTop: 20 }} onClick={() => navigate("/arena")}>
+              DASHBOARD
+            </button>
           </div>
         )}
       </div>
