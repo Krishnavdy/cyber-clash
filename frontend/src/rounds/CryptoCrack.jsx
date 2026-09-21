@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { api } from "../api";
 
 export default function CryptoCrack({ roundId, isTimeUp }) {
+  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [activeStage, setActiveStage] = useState(0);
   const [guess, setGuess] = useState("");
@@ -135,17 +137,22 @@ export default function CryptoCrack({ roundId, isTimeUp }) {
           ← PREV STAGE
         </button>
 
-        <button
-          className="btn btn-cyan"
-          disabled={activeStage === (data.total || 5) - 1}
-          onClick={() => {
-            setActiveStage((s) => Math.min((data.total || 5) - 1, s + 1));
-            setGuess("");
-            setWrong(false);
-          }}
-        >
-          NEXT STAGE →
-        </button>
+        {activeStage === (data.total || 5) - 1 ? (
+          <button className="btn btn-cyan" onClick={() => navigate("/arena")}>
+            DASHBOARD
+          </button>
+        ) : (
+          <button
+            className="btn btn-cyan"
+            onClick={() => {
+              setActiveStage((s) => Math.min((data.total || 5) - 1, s + 1));
+              setGuess("");
+              setWrong(false);
+            }}
+          >
+            NEXT STAGE →
+          </button>
+        )}
       </div>
     </div>
   );
