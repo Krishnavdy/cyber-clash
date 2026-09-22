@@ -8,6 +8,7 @@ export default function CyberQuiz({ roundId, isTimeUp }) {
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState({});
   const [saving, setSaving] = useState(false);
+  const [completing, setCompleting] = useState(false);
 
   async function refresh() {
     const d = await api.getRoundContent(roundId);
@@ -19,7 +20,7 @@ export default function CyberQuiz({ roundId, isTimeUp }) {
     refresh();
   }, [roundId]);
 
-  if (!data || !data.questions) return <div className="locked-screen">Loading round…</div>;
+  if (!data || !data.questions) return <div className="locked-screen">Loading round...</div>;
 
   const timeExpired = Boolean(isTimeUp);
   const q = data.questions[current] || data.questions[0];
@@ -35,6 +36,22 @@ export default function CyberQuiz({ roundId, isTimeUp }) {
       // safe fallback
     } finally {
       setSaving(false);
+    }
+  }
+
+  // Smart Dashboard: lock this round in DB then go to next live round (or arena)
+  async function handleDashboard() {
+    if (completing) return;
+    setCompleting(true);
+    try {
+      const res = await api.completeRound(roundId);
+      if (res.nextRoundId) {
+        navigate(`/arena/${res.nextRoundId}`);
+      } else {
+        navigate("/arena");
+      }
+    } catch {
+      navigate("/arena");
     }
   }
 
@@ -97,7 +114,6 @@ export default function CyberQuiz({ roundId, isTimeUp }) {
         </div>
       )}
 
-
       {/* Prev / Next Navigation Controls */}
       <div style={{ display: "flex", justifyContent: "space-between", gap: 12, marginTop: 10 }}>
         <button
@@ -105,23 +121,22 @@ export default function CyberQuiz({ roundId, isTimeUp }) {
           disabled={current === 0}
           onClick={() => setCurrent((c) => Math.max(0, c - 1))}
         >
-          ← PREV
+          {"\u2190"} PREV
         </button>
 
         {current === data.questions.length - 1 ? (
-          <button className="btn btn-cyan" onClick={() => navigate("/arena")}>
-            DASHBOARD
+          <button className="btn btn-cyan" onClick={handleDashboard} disabled={completing}>
+            {completing ? "SAVING..." : "DASHBOARD \u2192"}
           </button>
         ) : (
           <button
             className="btn btn-cyan"
             onClick={() => setCurrent((c) => Math.min(data.questions.length - 1, c + 1))}
           >
-            NEXT →
+            NEXT {"\u2192"}
           </button>
         )}
       </div>
     </div>
   );
 }
-
