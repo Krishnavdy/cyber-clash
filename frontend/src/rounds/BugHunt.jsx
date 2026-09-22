@@ -7,6 +7,7 @@ export default function BugHunt({ roundId, isTimeUp }) {
   const [data, setData] = useState(null);
   const [explanations, setExplanations] = useState({});
   const [picked, setPicked] = useState({});
+  const [completing, setCompleting] = useState(false);
 
   async function refresh() {
     const d = await api.getRoundContent(roundId);
@@ -29,6 +30,22 @@ export default function BugHunt({ roundId, isTimeUp }) {
       explanation: explanations[snippetId] || "",
     });
     refresh();
+  }
+
+  // Smart Dashboard: lock this round in DB then go to next live round (or arena)
+  async function handleDashboard() {
+    if (completing) return;
+    setCompleting(true);
+    try {
+      const res = await api.completeRound(roundId);
+      if (res.nextRoundId) {
+        navigate(`/arena/${res.nextRoundId}`);
+      } else {
+        navigate("/arena");
+      }
+    } catch {
+      navigate("/arena");
+    }
   }
 
   return (
@@ -83,8 +100,8 @@ export default function BugHunt({ roundId, isTimeUp }) {
           </div>
         );
       })}
-      <button className="btn btn-cyan" style={{ width: "100%" }} onClick={() => navigate("/arena")}>
-        DASHBOARD
+      <button className="btn btn-cyan" style={{ width: "100%" }} onClick={handleDashboard} disabled={completing}>
+        {completing ? "SAVING..." : "DASHBOARD \u2192"}
       </button>
     </div>
   );
