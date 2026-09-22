@@ -8,6 +8,7 @@ export default function CyberDetective({ roundId, isTimeUp }) {
   const [flags, setFlags] = useState({});
   const [wrongStation, setWrongStation] = useState(null);
   const [currentStationIndex, setCurrentStationIndex] = useState(0);
+  const [completing, setCompleting] = useState(false);
 
   async function refresh() {
     const d = await api.getRoundContent(roundId);
@@ -52,6 +53,22 @@ export default function CyberDetective({ roundId, isTimeUp }) {
       setTimeout(() => {
         setWrongStation(null);
       }, 900);
+    }
+  }
+
+  // Smart Dashboard: lock this round in DB then go to next live round (or arena)
+  async function handleDashboard() {
+    if (completing) return;
+    setCompleting(true);
+    try {
+      const res = await api.completeRound(roundId);
+      if (res.nextRoundId) {
+        navigate(`/arena/${res.nextRoundId}`);
+      } else {
+        navigate("/arena");
+      }
+    } catch {
+      navigate("/arena");
     }
   }
 
@@ -197,8 +214,8 @@ export default function CyberDetective({ roundId, isTimeUp }) {
                 ← PREV
               </button>
               {currentStationIndex === data.stations.length - 1 ? (
-                <button className="btn btn-cyan" onClick={() => navigate("/arena")}>
-                  DASHBOARD
+                <button className="btn btn-cyan" onClick={handleDashboard} disabled={completing}>
+                  {completing ? "SAVING..." : "DASHBOARD \u2192"}
                 </button>
               ) : (
                 <button
@@ -220,8 +237,8 @@ export default function CyberDetective({ roundId, isTimeUp }) {
             }}
           >
             ✓ ALL FLAGS CAPTURED
-            <button className="btn btn-cyan" style={{ width: "100%", marginTop: 20 }} onClick={() => navigate("/arena")}>
-              DASHBOARD
+            <button className="btn btn-cyan" style={{ width: "100%", marginTop: 20 }} onClick={handleDashboard} disabled={completing}>
+              {completing ? "SAVING..." : "DASHBOARD \u2192"}
             </button>
           </div>
         )}
