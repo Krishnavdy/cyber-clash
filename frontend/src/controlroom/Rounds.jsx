@@ -2,6 +2,14 @@ import { useEffect, useState } from "react";
 import { api } from "../api";
 import { socket } from "../socket";
 
+function formatTime(ms) {
+  const safeMs = Math.max(0, ms || 0);
+  const totalSec = Math.floor(safeMs / 1000);
+  const minutes = String(Math.floor(totalSec / 60)).padStart(2, "0");
+  const seconds = String(totalSec % 60).padStart(2, "0");
+  return `${minutes}:${seconds}`;
+}
+
 export default function Rounds() {
   const [rounds, setRounds] = useState([]);
 
@@ -28,6 +36,15 @@ export default function Rounds() {
 function RoundCard({ round, onChange }) {
   const [minutes, setMinutes] = useState(round.timerMinutes);
   const [autoStop, setAutoStop] = useState(round.autoStop);
+  const [now, setNow] = useState(Date.now());
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const remaining = round.status === "live" && round.endsAt ? Math.max(0, round.endsAt - now) : 0;
+  const displayTimer = round.status === "live" ? formatTime(remaining) : `${String(round.timerMinutes).padStart(2, "0")}:00`;
 
   const chip =
     round.status === "live" ? { label: "LIVE", cls: "live" } :
@@ -45,7 +62,7 @@ function RoundCard({ round, onChange }) {
       </div>
 
       <div className="ra-meta">
-        <span>TIMER {round.timerMinutes}:00 ({round.status === "live" ? "running" : "ready"})</span>
+        <span>TIMER {displayTimer} ({round.status === "live" ? "running" : "ready"})</span>
         <span>MAX {round.maxPoints} PTS</span>
       </div>
 
