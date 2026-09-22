@@ -9,16 +9,12 @@ export default function Teams() {
   const [authError, setAuthError] = useState(false);
   const navigate = useNavigate();
 
-  // Wrapped in useCallback so the same reference is used for socket on/off
   const refresh = useCallback(async () => {
     try {
       const data = await api.getTeams();
       setTeams(data);
-      setAuthError(false); // clear any previous auth error on success
+      setAuthError(false);
     } catch (err) {
-      // If the token is gone / expired, the API returns 401 and throws.
-      // Do NOT call setTeams([]) here — keep showing the last known list
-      // so teams don't vanish. Instead surface a visible error banner.
       const isAuthErr =
         err.message === "unauthorized" ||
         !localStorage.getItem("cc_admin_token");
@@ -51,7 +47,6 @@ export default function Teams() {
 
   return (
     <div>
-      {/* Session-expired banner — shown whenever the admin token is missing/invalid */}
       {authError && (
         <div style={{
           display: "flex", alignItems: "center", gap: 16,
@@ -70,23 +65,25 @@ export default function Teams() {
         </div>
       )}
 
-      <div className="cr-row">
+      <div className="cr-row" style={{ alignItems: "center" }}>
         <form onSubmit={addTeam} style={{ display: "flex", gap: 12, flex: 1 }}>
           <input className="input" placeholder="new team name…" value={name} onChange={(e) => setName(e.target.value)} />
           <button className="btn btn-cyan">＋ ADD TEAM</button>
         </form>
+        <span className="mono" style={{ fontWeight: 700, marginRight: 16 }}>
+          TEAMS REGISTERED: {teams.length}
+        </span>
         <a className="btn" href={api.exportCsvUrl()} target="_blank" rel="noreferrer">⬇ EXPORT CSV</a>
       </div>
 
       <div className="cr-table-wrap">
-        {/* Only show "no teams" if there's genuinely no data AND we're not in an auth-error state */}
         {teams.length === 0 && !authError ? (
           <div className="cr-empty">NO TEAMS REGISTERED YET</div>
         ) : teams.length > 0 ? (
           <table className="cr-table">
             <thead>
               <tr>
-                <th>TEAM</th><th>TEAM CODE</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>BONUS</th><th>TOTAL</th><th>WARN</th><th>VIOL</th><th>STATUS</th><th>ACTIONS</th>
+                <th>TEAM</th><th>TEAM CODE</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>TOTAL</th><th>WARN</th><th>VIOL</th><th>STATUS</th><th>ACTIONS</th>
               </tr>
             </thead>
             <tbody>
@@ -102,8 +99,6 @@ export default function Teams() {
 }
 
 function TeamRow({ team, onChange }) {
-  const [bonus, setBonus] = useState(team.scores.bonus);
-
   return (
     <tr>
       <td>{team.name}</td>
@@ -112,14 +107,6 @@ function TeamRow({ team, onChange }) {
       <td>{team.scores.r2}</td>
       <td>{team.scores.r3}</td>
       <td>{team.scores.r4}</td>
-      <td>
-        <input
-          className="mini-input"
-          value={bonus}
-          onChange={(e) => setBonus(e.target.value)}
-          onBlur={() => api.setBonus(team.id, Number(bonus) || 0).then(onChange)}
-        />
-      </td>
       <td style={{ color: "var(--green)", fontWeight: 700 }}>{team.total}</td>
       <td>{team.warnings}</td>
       <td>{team.violations}</td>
