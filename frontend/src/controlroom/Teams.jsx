@@ -7,6 +7,7 @@ export default function Teams() {
   const [teams, setTeams] = useState([]);
   const [name, setName] = useState("");
   const [authError, setAuthError] = useState(false);
+  const [importing, setImporting] = useState(false);
   const navigate = useNavigate();
 
   const refresh = useCallback(async () => {
@@ -45,6 +46,23 @@ export default function Teams() {
     }
   }
 
+  async function importTeams(e) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    setImporting(true);
+    try {
+      const result = await api.importTeams(file);
+      await refresh();
+      alert(`Imported ${result.total} team${result.total === 1 ? "" : "s"}. Skipped ${result.skipped.length}.`);
+    } catch (err) {
+      if (!localStorage.getItem("cc_admin_token")) setAuthError(true);
+      else alert("Failed to import teams: " + err.message);
+    } finally {
+      setImporting(false);
+    }
+  }
+
   return (
     <div>
       {authError && (
@@ -73,6 +91,16 @@ export default function Teams() {
         <span className="mono" style={{ fontWeight: 700, marginRight: 16 }}>
           TEAMS REGISTERED: {teams.length}
         </span>
+        <label className="btn" style={{ cursor: importing ? "wait" : "pointer" }}>
+          {importing ? "⟳ IMPORTING…" : "⬆ IMPORT EXCEL"}
+          <input
+            type="file"
+            accept=".xlsx,.xls,.csv"
+            onChange={importTeams}
+            disabled={importing}
+            style={{ display: "none" }}
+          />
+        </label>
         <a className="btn" href={api.exportCsvUrl()} target="_blank" rel="noreferrer">⬇ EXPORT CSV</a>
       </div>
 
