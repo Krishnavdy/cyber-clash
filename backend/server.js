@@ -6,16 +6,18 @@ const path = require("path");
 const crypto = require("crypto");
 const express = require("express");
 const cors = require("cors");
+const multer = require("multer");
+const XLSX = require("xlsx");
 const http = require("http");
 const { Server } = require("socket.io");
 const low = require("lowdb");
-const FileSync = require("lowdb/adapters/FileSync");
 const { nanoid } = require("nanoid");
 
 const fs = require("fs");
 
 const PORT = process.env.PORT || 4000;
 const ADMIN_PASSCODE = process.env.ADMIN_PASSCODE || "spider";
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 2 * 1024 * 1024 } });
 
 // ---------------------------------------------------------------------------
 // Persistence
@@ -25,7 +27,43 @@ if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
 
-const adapter = new FileSync(path.join(dataDir, "db.json"));
+const dbFile = path.join(dataDir, "db.json");
+const initialData = fs.existsSync(dbFile)
+  ? JSON.parse(fs.readFileSync(dbFile, "utf8"))
+  : {};
+
+let pendingSnapshot = null;
+let persistTimer = null;
+let persistInFlight = false;
+
+function schedulePersist(state) {
+  pendingSnapshot = JSON.stringify(state, null, 2);
+  if (!persistTimer) persistTimer = setTimeout(flushPersistence, 50);
+}
+
+async function flushPersistence() {
+  persistTimer = null;
+  if (persistInFlight || !pendingSnapshot) return;
+  persistInFlight = true;
+  const snapshot = pendingSnapshot;
+  pendingSnapshot = null;
+  const tempFile = `${dbFile}.tmp`;
+  try {
+    await fs.promises.writeFile(tempFile, snapshot, "utf8");
+    await fs.promises.rename(tempFile, dbFile);
+  } catch (error) {
+    console.error("Persistence flush failed:", error.message);
+    pendingSnapshot = snapshot;
+  } finally {
+    persistInFlight = false;
+    if (pendingSnapshot && !persistTimer) persistTimer = setTimeout(flushPersistence, 50);
+  }
+}
+
+const adapter = {
+  read: () => initialData,
+  write: (state) => schedulePersist(state),
+};
 const db = low(adapter);
 
 db.defaults({
@@ -255,8 +293,14 @@ function publicState() {
   };
 }
 
+let broadcastTimer = null;
+
 function broadcastState() {
-  io.emit("state:update", publicState());
+  if (broadcastTimer) return;
+  broadcastTimer = setTimeout(() => {
+    broadcastTimer = null;
+    io.emit("state:update", publicState());
+  }, 50);
 }
 
 function currentLiveRound() {
@@ -566,6 +610,55 @@ app.post("/api/admin/teams", requireAdmin, (req, res) => {
   db.get("teams").push(team).write();
   broadcastState();
   res.json({ team: publicTeam(team), passcode });
+});
+
+app.post("/api/admin/teams/import", requireAdmin, upload.single("file"), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: "Excel file required" });
+
+  let rows;
+  try {
+    const workbook = XLSX.read(req.file.buffer, { type: "buffer" });
+    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+    rows = XLSX.utils.sheet_to_json(firstSheet, { defval: "" });
+  } catch (error) {
+    return res.status(400).json({ error: "Could not read Excel file" });
+  }
+
+  const existingNames = new Set(db.get("teams").value().map((team) => team.name.trim().toLowerCase()));
+  const created = [];
+  const skipped = [];
+
+  for (const row of rows) {
+    const nameKey = Object.keys(row).find((key) => /^(team\s*)?name$/i.test(String(key).trim()));
+    const name = String(nameKey ? row[nameKey] : Object.values(row)[0] || "").trim();
+    if (!name) {
+      skipped.push({ name: "", reason: "empty team name" });
+      continue;
+    }
+    const normalizedName = name.toLowerCase();
+    if (existingNames.has(normalizedName)) {
+      skipped.push({ name, reason: "duplicate team name" });
+      continue;
+    }
+
+    const team = {
+      id: nanoid(10),
+      name,
+      passcode: Math.random().toString(36).slice(2, 8).toUpperCase(),
+      createdAt: Date.now(),
+      scores: { r1: 0, r2: 0, r3: 0, r4: 0, bonus: 0 },
+      warnings: 0,
+      violations: 0,
+      status: "active",
+      roundProgress: {},
+    };
+    db.get("teams").push(team).write();
+    existingNames.add(normalizedName);
+    created.push({ name: team.name, passcode: team.passcode });
+  }
+
+  if (created.length) broadcastState();
+  res.json({ created, skipped, total: created.length });
 });
 
 app.delete("/api/admin/teams/:id", requireAdmin, (req, res) => {
