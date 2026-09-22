@@ -1,9 +1,25 @@
 import { Link, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useLiveState } from "../useLiveState";
+
+function formatTime(ms) {
+  const safeMs = Math.max(0, ms || 0);
+  const totalSec = Math.floor(safeMs / 1000);
+  const minutes = String(Math.floor(totalSec / 60)).padStart(2, "0");
+  const seconds = String(totalSec % 60).padStart(2, "0");
+  return `${minutes}:${seconds}`;
+}
 
 export default function Arena() {
   const state = useLiveState();
+  const [now, setNow] = useState(Date.now());
   const teamToken = localStorage.getItem("cc_team_token");
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
   if (!teamToken) return <Navigate to="/team-login" replace />;
 
   const teamName = localStorage.getItem("cc_team_name");
@@ -78,6 +94,9 @@ export default function Arena() {
                   <div className="round-eyebrow"><span>ROUND {r.order}</span></div>
                   <div className={`round-name c-${r.color}`}>{r.name}</div>
                   <div className="round-desc">Score so far: {myTeam?.scores?.[r.id] ?? 0} / {r.maxPoints} pts</div>
+                  <div className="round-desc" style={{ marginTop: 4 }}>
+                    TIMER: {r.status === "live" && r.endsAt ? formatTime(r.endsAt - now) : `${String(r.timerMinutes).padStart(2, "0")}:00`}
+                  </div>
                   <div className="round-foot">
                     <div className="round-pts">MAX <b>{r.maxPoints}</b> PTS</div>
                     <div className="round-status">
