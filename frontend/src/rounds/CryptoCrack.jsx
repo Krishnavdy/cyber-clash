@@ -9,6 +9,7 @@ export default function CryptoCrack({ roundId, isTimeUp }) {
   const [guess, setGuess] = useState("");
   const [wrong, setWrong] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [completing, setCompleting] = useState(false);
 
   async function refresh() {
     const d = await api.getRoundContent(roundId);
@@ -22,7 +23,7 @@ export default function CryptoCrack({ roundId, isTimeUp }) {
     refresh();
   }, [roundId]);
 
-  if (!data) return <div className="locked-screen">Loading round…</div>;
+  if (!data) return <div className="locked-screen">Loading round...</div>;
 
   const timeExpired = Boolean(isTimeUp);
 
@@ -54,6 +55,22 @@ export default function CryptoCrack({ roundId, isTimeUp }) {
     }
   }
 
+  // Smart Dashboard: lock this round in DB then go to next live round (or arena)
+  async function handleDashboard() {
+    if (completing) return;
+    setCompleting(true);
+    try {
+      const res = await api.completeRound(roundId);
+      if (res.nextRoundId) {
+        navigate(`/arena/${res.nextRoundId}`);
+      } else {
+        navigate("/arena");
+      }
+    } catch {
+      navigate("/arena");
+    }
+  }
+
   return (
     <div>
       {/* Stage Jumper Tabs */}
@@ -77,14 +94,14 @@ export default function CryptoCrack({ roundId, isTimeUp }) {
                 setWrong(false);
               }}
             >
-              STAGE {idx + 1} {solved ? "🔓" : ""}
+              STAGE {idx + 1} {solved ? "\uD83D\uDD13" : ""}
             </button>
           );
         })}
       </div>
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontFamily: "var(--mono)", color: "var(--text-faint)", fontSize: 12, marginBottom: 14 }}>
-        <span>STAGE {activeStage + 1} / {data.total || 5} — {currentCipher?.type}</span>
+        <span>STAGE {activeStage + 1} / {data.total || 5} {"\u2014"} {currentCipher?.type}</span>
         <span>{(data.solved || []).length} / {data.total || 5} SOLVED</span>
       </div>
 
@@ -96,28 +113,28 @@ export default function CryptoCrack({ roundId, isTimeUp }) {
 
           {isSolved ? (
             <div style={{ fontFamily: "var(--mono)", color: "var(--green)", fontSize: 14, background: "rgba(74, 222, 154, 0.08)", padding: 14, borderRadius: 8, border: "1px solid rgba(74, 222, 154, 0.3)" }}>
-              🔓 STAGE {activeStage + 1} SOLVED! Correct plaintext accepted.
+              {"\uD83D\uDD13"} STAGE {activeStage + 1} SOLVED! Correct plaintext accepted.
             </div>
           ) : (
             <form onSubmit={onSubmit}>
               <input
                 className="input"
                 style={{ marginBottom: 14, borderColor: wrong ? "var(--red)" : undefined }}
-                placeholder="Enter decoded plaintext…"
+                placeholder="Enter decoded plaintext..."
                 value={guess}
                 onChange={(e) => setGuess(e.target.value)}
                 disabled={timeExpired}
                 autoFocus
               />
               <button className="btn btn-primary" style={{ width: "100%" }} disabled={submitting || timeExpired}>
-                {submitting ? "VERIFYING…" : timeExpired ? "TIME COMPLETED" : "SUBMIT DECRYPTION"}
+                {submitting ? "VERIFYING..." : timeExpired ? "TIME COMPLETED" : "SUBMIT DECRYPTION"}
               </button>
             </form>
           )}
 
           {wrong && (
             <div style={{ color: "var(--red)", fontFamily: "var(--mono)", fontSize: 13, marginTop: 12 }}>
-              Incorrect decrypted text — try again.
+              Incorrect decrypted text {"\u2014"} try again.
             </div>
           )}
         </div>
@@ -134,12 +151,12 @@ export default function CryptoCrack({ roundId, isTimeUp }) {
             setWrong(false);
           }}
         >
-          ← PREV STAGE
+          {"\u2190"} PREV STAGE
         </button>
 
         {activeStage === (data.total || 5) - 1 ? (
-          <button className="btn btn-cyan" onClick={() => navigate("/arena")}>
-            DASHBOARD
+          <button className="btn btn-cyan" onClick={handleDashboard} disabled={completing}>
+            {completing ? "SAVING..." : "DASHBOARD \u2192"}
           </button>
         ) : (
           <button
@@ -150,12 +167,10 @@ export default function CryptoCrack({ roundId, isTimeUp }) {
               setWrong(false);
             }}
           >
-            NEXT STAGE →
+            NEXT STAGE {"\u2192"}
           </button>
         )}
       </div>
     </div>
   );
 }
-
-
