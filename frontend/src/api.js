@@ -36,6 +36,10 @@ export const api = {
   getRoundContent: (roundId) => request(`/round/${roundId}/content`, { role: "team" }),
   submitRound: (roundId, body) => request(`/round/${roundId}/submit`, { method: "POST", body, role: "team" }),
   reportViolation: (type) => request("/violation", { method: "POST", body: { type }, role: "team" }),
+  // per-team round status (server-persisted, refresh-proof)
+  getTeamStatus: () => request("/team/status", { role: "team" }),
+  enterRound: (roundId) => request(`/round/${roundId}/enter`, { method: "POST", role: "team" }),
+  completeRound: (roundId) => request(`/round/${roundId}/complete`, { method: "POST", role: "team" }),
 
   // admin
   getOverview: () => request("/admin/overview", { role: "admin" }),
@@ -48,6 +52,7 @@ export const api = {
   },
   deleteTeam: (id) => request(`/admin/teams/${id}`, { method: "DELETE", role: "admin" }),
   resetTeam: (id) => request(`/admin/teams/${id}/reset`, { method: "POST", role: "admin" }),
+  resetTeamRound: (teamId, roundId) => request(`/admin/teams/${teamId}/rounds/${roundId}/reset`, { method: "POST", role: "admin" }),
   eliminateTeam: (id) => request(`/admin/teams/${id}/eliminate`, { method: "POST", role: "admin" }),
   reinstateTeam: (id) => request(`/admin/teams/${id}/reinstate`, { method: "POST", role: "admin" }),
   setBonus: (id, points) => request(`/admin/teams/${id}/bonus`, { method: "POST", body: { points }, role: "admin" }),
