@@ -140,13 +140,27 @@ function TeamRow({ team, onChange }) {
       <td>{team.violations}</td>
       <td><span className={`badge status-${team.status}`}>{team.status.toUpperCase()}</span></td>
       <td>
-        <button className="mini-btn" onClick={() => api.resetTeam(team.id).then(onChange)}>RESET</button>
-        {team.status === "eliminated" ? (
-          <button className="mini-btn" onClick={() => api.reinstateTeam(team.id).then(onChange)}>REINSTATE</button>
-        ) : (
-          <button className="mini-btn danger" onClick={() => api.eliminateTeam(team.id).then(onChange)}>ELIMINATE</button>
-        )}
-        <button className="mini-btn danger" onClick={() => window.confirm(`Delete ${team.name}?`) && api.deleteTeam(team.id).then(onChange)}>DELETE</button>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "center" }}>
+          {['r1', 'r2', 'r3', 'r4'].map((roundId) => (
+            <button
+              key={roundId}
+              className="mini-btn"
+              title={`Reset ${roundId.toUpperCase()} for ${team.name}`}
+              onClick={() => window.confirm(`Reset ${roundId.toUpperCase()} for ${team.name}?`) && api.resetTeamRound(team.id, roundId).then(onChange)}
+            >
+              {roundId.toUpperCase()}
+            </button>
+          ))}
+          <button className="mini-btn" onClick={() => api.resetTeam(team.id).then(onChange)}>ALL</button>
+        </div>
+        <div style={{ display: "flex", gap: 6, marginTop: 8, justifyContent: "center" }}>
+          {team.status === "eliminated" ? (
+            <button className="mini-btn" onClick={() => api.reinstateTeam(team.id).then(onChange)}>REINSTATE</button>
+          ) : (
+            <button className="mini-btn danger" onClick={() => api.eliminateTeam(team.id).then(onChange)}>ELIMINATE</button>
+          )}
+          <button className="mini-btn danger" onClick={() => window.confirm(`Delete ${team.name}?`) && api.deleteTeam(team.id).then(onChange)}>DELETE</button>
+        </div>
       </td>
     </tr>
   );
