@@ -5,13 +5,14 @@ function tokenFor(role) {
 }
 
 async function request(path, { method = "GET", body, role } = {}) {
-  const headers = { "Content-Type": "application/json" };
+  const isFormData = typeof FormData !== "undefined" && body instanceof FormData;
+  const headers = isFormData ? {} : { "Content-Type": "application/json" };
   const token = role ? tokenFor(role) : null;
   if (token) headers["Authorization"] = `Bearer ${token}`;
   const res = await fetch(BASE + path, {
     method,
     headers,
-    body: body ? JSON.stringify(body) : undefined,
+    body: body ? (isFormData ? body : JSON.stringify(body)) : undefined,
   });
   const data = await res.json().catch(() => ({}));
   if (res.status === 401 && role) {
@@ -40,6 +41,11 @@ export const api = {
   getOverview: () => request("/admin/overview", { role: "admin" }),
   getTeams: () => request("/admin/teams", { role: "admin" }),
   addTeam: (name) => request("/admin/teams", { method: "POST", body: { name }, role: "admin" }),
+  importTeams: (file) => {
+    const body = new FormData();
+    body.append("file", file);
+    return request("/admin/teams/import", { method: "POST", body, role: "admin" });
+  },
   deleteTeam: (id) => request(`/admin/teams/${id}`, { method: "DELETE", role: "admin" }),
   resetTeam: (id) => request(`/admin/teams/${id}/reset`, { method: "POST", role: "admin" }),
   eliminateTeam: (id) => request(`/admin/teams/${id}/eliminate`, { method: "POST", role: "admin" }),
