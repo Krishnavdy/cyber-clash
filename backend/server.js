@@ -83,35 +83,42 @@ db.defaults({
 // ---------------------------------------------------------------------------
 // Round content — correct answers NEVER leave this file / this process.
 // ---------------------------------------------------------------------------
+// Round 1 — Cyber Quiz: 20 questions, Q1-10 very easy, Q11-14 medium, Q15-16 medium/hard, Q17-20 hard
 const QUIZ_QUESTIONS = [
-  { q: "Which port is the default for HTTPS?", options: ["21", "443", "23", "3389"], a: 1 },
-  { q: "What does DNS stand for?", options: ["Domain Name System", "Direct Network Service", "Data Node Storage", "Digital Naming Standard"], a: 0 },
-  { q: "Which attack floods a target with traffic to exhaust resources?", options: ["Phishing", "SQL Injection", "DDoS", "XSS"], a: 2 },
-  { q: "Which port does SSH use by default?", options: ["22", "80", "25", "110"], a: 0 },
-  { q: "Ransomware primarily attacks by:", options: ["Encrypting files for ransom", "Slowing the CPU", "Deleting logs only", "Mining cryptocurrency only"], a: 0 },
-  { q: "A 'zero-day' vulnerability is:", options: ["A bug patched immediately", "A flaw unknown to the vendor with no fix yet", "A bug older than a year", "A test environment issue"], a: 1 },
-  { q: "Which of these is a symmetric encryption algorithm?", options: ["RSA", "AES", "ECC", "Diffie-Hellman"], a: 1 },
-  { q: "SQL Injection primarily exploits:", options: ["Unsanitized database input", "Weak Wi-Fi passwords", "Expired SSL certificates", "DNS cache poisoning"], a: 0 },
-  { q: "Which port does FTP use for control by default?", options: ["21", "25", "110", "143"], a: 0 },
-  { q: "Phishing is best described as:", options: ["A brute-force login attack", "Tricking a user into revealing info via deception", "Overloading a server", "Cracking a hash offline"], a: 1 },
-  { q: "What does a firewall primarily do?", options: ["Encrypts disk data", "Filters network traffic by rules", "Compresses files", "Backs up databases"], a: 1 },
-  { q: "Which malware type disguises itself as legitimate software?", options: ["Worm", "Trojan", "Rootkit", "Adware"], a: 1 },
-  { q: "MFA stands for:", options: ["Multi-Factor Authentication", "Managed File Access", "Malware Filter Agent", "Mandatory Firewall Audit"], a: 0 },
-  { q: "Which HTTP status code means 'Unauthorized'?", options: ["200", "404", "401", "500"], a: 2 },
-  { q: "A man-in-the-middle attack intercepts:", options: ["Communication between two parties", "Only DNS requests", "Only encrypted disks", "Only USB devices"], a: 0 },
-  { q: "Which of these is NOT a hashing algorithm?", options: ["SHA-256", "MD5", "AES", "bcrypt"], a: 2 },
-  { q: "A worm differs from a virus because it:", options: ["Needs a host file to spread", "Self-replicates without a host file", "Only affects mobile devices", "Cannot spread over networks"], a: 1 },
-  { q: "Which port does HTTP use by default?", options: ["80", "443", "8443", "21"], a: 0 },
-  { q: "Social engineering attacks primarily target:", options: ["Human trust and behavior", "Hardware firmware", "Network switches", "Database indexes"], a: 0 },
-  { q: "A VPN primarily provides:", options: ["Faster internet speeds", "An encrypted tunnel over a network", "Free antivirus updates", "Automatic backups"], a: 1 },
+  // --- Very Easy (Q1–Q10) ---
+  { q: "What does 'HTTP' stand for?", options: ["HyperText Transfer Protocol", "High Transfer Text Protocol", "Host Terminal Transfer Process", "Hyperlink Text Transport Program"], a: 0 },
+  { q: "Which port does HTTP use by default?", options: ["443", "21", "80", "25"], a: 2 },
+  { q: "What is a firewall used for?", options: ["Speed up internet", "Filter and control network traffic", "Encrypt hard drives", "Store passwords"], a: 1 },
+  { q: "What does 'virus' refer to in cybersecurity?", options: ["A type of network cable", "A self-replicating malicious program", "A secure login method", "A firewall configuration"], a: 1 },
+  { q: "Which of these is an example of personal information that should be kept private?", options: ["Your favorite color", "Your country of birth", "Your bank account number", "Your favorite movie"], a: 2 },
+  { q: "What does 'password strength' refer to?", options: ["How long the password takes to type", "How hard the password is to guess or crack", "The number of websites the password is used on", "The color shown in the password bar"], a: 1 },
+  { q: "What is 'phishing'?", options: ["A type of network scan", "Tricking users into giving sensitive info via fake messages", "A method to speed up downloads", "An encryption technique"], a: 1 },
+  { q: "Which port does HTTPS use by default?", options: ["80", "22", "443", "8080"], a: 2 },
+  { q: "What is malware?", options: ["Helpful software that speeds up PCs", "Malicious software designed to harm systems", "A type of computer hardware", "A strong encryption algorithm"], a: 1 },
+  { q: "What does 'authentication' mean?", options: ["Encrypting data before sending", "Verifying the identity of a user or system", "Copying files to a backup server", "Filtering network traffic"], a: 1 },
+  // --- Medium (Q11–Q14) ---
+  { q: "Which of the following BEST describes a DDoS attack?", options: ["Stealing encrypted files from a server", "Flooding a target with traffic from many sources to deny service", "Installing a backdoor into an application", "Intercepting messages between two users"], a: 1 },
+  { q: "What is the primary purpose of a VPN?", options: ["Block all incoming connections", "Speed up internet browsing", "Create an encrypted tunnel for private communication over public networks", "Scan for open ports on a remote server"], a: 2 },
+  { q: "Multi-Factor Authentication (MFA) improves security by:", options: ["Using a very long password", "Requiring more than one form of verification before granting access", "Encrypting data with two different keys", "Running two antivirus programs simultaneously"], a: 1 },
+  { q: "Which of the following is a symmetric encryption algorithm?", options: ["RSA", "ECC", "AES", "Diffie-Hellman"], a: 2 },
+  // --- Medium/Hard (Q15–Q16) ---
+  { q: "A 'zero-day vulnerability' is BEST described as:", options: ["A vulnerability that has been patched the same day it was found", "A flaw unknown to the vendor with no available fix at the time of discovery", "A bug that only affects systems older than one year", "A vulnerability that is only exploitable at midnight"], a: 1 },
+  { q: "Which attack technique allows an attacker to inject malicious scripts into web pages viewed by other users?", options: ["SQL Injection", "Cross-Site Scripting (XSS)", "Buffer Overflow", "ARP Spoofing"], a: 1 },
+  // --- Hard (Q17–Q20) ---
+  { q: "A penetration tester discovers that a web application constructs SQL queries by directly concatenating user input. Which vulnerability class does this represent and what is the recommended remediation?", options: ["CSRF — use SameSite cookies", "SQL Injection — use parameterized queries / prepared statements", "Directory Traversal — sanitize file path separators", "XXE — disable external XML entities"], a: 1 },
+  { q: "During a network forensics investigation, an analyst sees a large number of SYN packets sent to a server with no corresponding SYN-ACK responses. What type of attack is most likely occurring?", options: ["Ping of Death", "ARP Poisoning", "SYN Flood (half-open connection attack)", "DNS Amplification"], a: 2 },
+  { q: "An attacker intercepts encrypted traffic between a client and server. Despite not knowing the session key, they record the ciphertext and later obtain the private key through a breach. Which property of a cryptographic protocol would have prevented decryption of past sessions?", options: ["Certificate pinning", "Perfect Forward Secrecy (PFS)", "RSA key wrapping", "HMAC integrity checking"], a: 1 },
+  { q: "A threat actor exfiltrates data by encoding it in DNS query subdomains (e.g., base64chunks.attacker.com). Which security control is MOST effective at detecting or blocking this technique?", options: ["Deploying a host-based antivirus", "Disabling HTTPS inspection", "DNS traffic analysis and RPZ (Response Policy Zones) filtering", "Rotating TLS certificates frequently"], a: 2 },
 ];
 
+// Round 2 — Crypto Crack: new cipher challenges, same cryptography/encoding topic
 const CIPHER_CHAIN = [
-  { type: "Caesar (+3)", prompt: "Decode this Caesar cipher (shift 3): WKH IODJ LV VDIH", answer: "the flag is safe" },
-  { type: "Base64", prompt: "Decode this Base64 string: Q1lCRVJDTEFTSDIwMjY=", answer: "CYBERCLASH2026" },
-  { type: "Hex", prompt: "Decode this hex string: 68756e742074686520666c6167", answer: "hunt the flag" },
-  { type: "Morse", prompt: "Decode this Morse code: -.-. .-.. .- ...- .-", answer: "clave" },
-  { type: "Vigenere (key: SAVANI)", prompt: "Decode this Vigenere cipher (key: SAVANI): AOZC ZL DYWO", answer: "cyber is king" },
+  { type: "Caesar (+7)", prompt: "Decode this Caesar cipher (shift 7): AOPZ PZ AOL MSHG", answer: "this is the flag" },
+  { type: "ROT13", prompt: "Decode this ROT13 string: PELORE QRSRAFR", answer: "cyber defence" },
+  { type: "Base64", prompt: "Decode this Base64 string: c2VjdXJpdHlmaXJzdA==", answer: "securityfirst" },
+  { type: "Hex", prompt: "Decode this hex string: 6861636b746865706c616e6574", answer: "hacktheplanet" },
+  { type: "Morse", prompt: "Decode this Morse code: ..-. .. .-. . .-- .- .-.. .-..", answer: "firewall" },
+  { type: "Atbash", prompt: "Decode this Atbash cipher (A↔Z, B↔Y…): XBYVIHVXFIRGB", answer: "cybersecurity" },
 ];
 
 const BUG_SNIPPETS = [
@@ -310,11 +317,14 @@ function currentLiveRound() {
 function resetTeamRoundProgress(team, roundId) {
   const t = db.get("teams").find({ id: team.id });
   t.set(["roundProgress", roundId], {}).write();
+  t.set(["roundStatus", roundId], "pending").write();
   if (roundId === "r3") {
     t.set(["scores", "r3"], 0).write();
     const existingJudging = db.get(["judging", "r3"]).value() || {};
     delete existingJudging[team.id];
     db.set(["judging", "r3"], existingJudging).write();
+  } else {
+    t.set(["scores", roundId], 0).write();
   }
 }
 
@@ -412,10 +422,65 @@ app.post("/api/team/login", (req, res) => {
 });
 
 // ---- Team-facing round content & submission ------------------------------
+// ---- Team round status endpoints -----------------------------------------
+
+// GET /api/team/status — returns the calling team's per-round status map
+app.get("/api/team/status", requireTeam, (req, res) => {
+  const team = db.get("teams").find({ id: req.team.id }).value();
+  res.json({ roundStatus: team.roundStatus || {} });
+});
+
+// POST /api/round/:roundId/enter — marks the round as "active" for this team (popup shown)
+app.post("/api/round/:roundId/enter", requireTeam, (req, res) => {
+  const round = db.get("rounds").find({ id: req.params.roundId }).value();
+  if (!round) return res.status(404).json({ error: "round not found" });
+  if (round.status !== "live") return res.status(403).json({ error: "round is not live" });
+
+  const teamRef = db.get("teams").find({ id: req.team.id });
+  const team = teamRef.value();
+  const currentStatus = (team.roundStatus || {})[round.id];
+
+  // Only set to "active" if not already active or completed
+  if (!currentStatus || currentStatus === "pending") {
+    teamRef.set(["roundStatus", round.id], "active").write();
+  }
+  const updated = db.get("teams").find({ id: req.team.id }).value();
+  res.json({ ok: true, roundStatus: updated.roundStatus || {} });
+});
+
+// POST /api/round/:roundId/complete — marks round completed for this team, returns next round id
+app.post("/api/round/:roundId/complete", requireTeam, (req, res) => {
+  const round = db.get("rounds").find({ id: req.params.roundId }).value();
+  if (!round) return res.status(404).json({ error: "round not found" });
+
+  const teamRef = db.get("teams").find({ id: req.team.id });
+  // Mark this round as completed for the team
+  teamRef.set(["roundStatus", round.id], "completed").write();
+
+  // Find the next round by order (must be globally live)
+  const allRounds = db.get("rounds").value().sort((a, b) => a.order - b.order);
+  const nextRound = allRounds.find((r) => r.order > round.order && r.status === "live");
+
+  res.json({
+    ok: true,
+    completedRoundId: round.id,
+    nextRoundId: nextRound ? nextRound.id : null,
+  });
+});
+
+// ---------------------------------------------------------------------------
+
 app.get("/api/round/:roundId/content", requireTeam, (req, res) => {
   const round = db.get("rounds").find({ id: req.params.roundId }).value();
   if (!round) return res.status(404).json({ error: "round not found" });
   if (round.status !== "live") return res.status(403).json({ error: "round is not live" });
+
+  // Block re-entry if this team has already completed this round
+  const team = db.get("teams").find({ id: req.team.id }).value();
+  const teamRoundStatus = (team.roundStatus || {})[round.id];
+  if (teamRoundStatus === "completed") {
+    return res.status(403).json({ error: "round already completed", completed: true });
+  }
 
   const progress = req.team.roundProgress?.[round.id] || {};
 
@@ -606,6 +671,7 @@ app.post("/api/admin/teams", requireAdmin, (req, res) => {
     violations: 0,
     status: "active",
     roundProgress: {},
+    roundStatus: {}, // per-team per-round status: "pending" | "active" | "completed"
   };
   db.get("teams").push(team).write();
   broadcastState();
@@ -651,6 +717,7 @@ app.post("/api/admin/teams/import", requireAdmin, upload.single("file"), (req, r
       violations: 0,
       status: "active",
       roundProgress: {},
+      roundStatus: {}, // per-team per-round status: "pending" | "active" | "completed"
     };
     db.get("teams").push(team).write();
     existingNames.add(normalizedName);
@@ -673,6 +740,19 @@ app.post("/api/admin/teams/:id/reset", requireAdmin, (req, res) => {
   teamRef.assign({ warnings: 0, violations: 0, status: "active", roundProgress: {} }).write();
   broadcastState();
   res.json({ ok: true });
+});
+
+app.post("/api/admin/teams/:teamId/rounds/:roundId/reset", requireAdmin, (req, res) => {
+  const team = db.get("teams").find({ id: req.params.teamId }).value();
+  if (!team) return res.status(404).json({ error: "team not found" });
+  const validRoundIds = ["r1", "r2", "r3", "r4"];
+  if (!validRoundIds.includes(req.params.roundId)) {
+    return res.status(400).json({ error: "invalid round id" });
+  }
+
+  resetTeamRoundProgress(team, req.params.roundId);
+  broadcastState();
+  res.json({ ok: true, roundId: req.params.roundId });
 });
 
 app.post("/api/admin/teams/:id/eliminate", requireAdmin, (req, res) => {
