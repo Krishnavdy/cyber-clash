@@ -1,31 +1,75 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { api } from "../api";
 import { socket } from "../socket";
 
 export default function Teams() {
   const [teams, setTeams] = useState([]);
   const [name, setName] = useState("");
+  const [authError, setAuthError] = useState(false);
+  const navigate = useNavigate();
 
-  async function refresh() {
-    setTeams(await api.getTeams());
-  }
+  // Wrapped in useCallback so the same reference is used for socket on/off
+  const refresh = useCallback(async () => {
+    try {
+      const data = await api.getTeams();
+      setTeams(data);
+      setAuthError(false); // clear any previous auth error on success
+    } catch (err) {
+      // If the token is gone / expired, the API returns 401 and throws.
+      // Do NOT call setTeams([]) here — keep showing the last known list
+      // so teams don't vanish. Instead surface a visible error banner.
+      const isAuthErr =
+        err.message === "unauthorized" ||
+        !localStorage.getItem("cc_admin_token");
+      if (isAuthErr) {
+        setAuthError(true);
+      } else {
+        console.error("Teams refresh failed:", err);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     refresh();
     socket.on("state:update", refresh);
     return () => socket.off("state:update", refresh);
-  }, []);
+  }, [refresh]);
 
   async function addTeam(e) {
     e.preventDefault();
     if (!name.trim()) return;
-    await api.addTeam(name.trim());
-    setName("");
-    refresh();
+    try {
+      await api.addTeam(name.trim());
+      setName("");
+      refresh();
+    } catch (err) {
+      if (!localStorage.getItem("cc_admin_token")) setAuthError(true);
+      else alert("Failed to add team: " + err.message);
+    }
   }
 
   return (
     <div>
+      {/* Session-expired banner — shown whenever the admin token is missing/invalid */}
+      {authError && (
+        <div style={{
+          display: "flex", alignItems: "center", gap: 16,
+          background: "rgba(255,60,60,0.15)", border: "1px solid rgba(255,60,60,0.5)",
+          borderRadius: 8, padding: "12px 20px", marginBottom: 16, color: "#ff6b6b",
+          fontWeight: 700, fontSize: 14, letterSpacing: "0.05em"
+        }}>
+          <span>⚠ SESSION EXPIRED — your admin token is missing or invalid. Teams data is safe in the database.</span>
+          <button
+            className="btn"
+            style={{ marginLeft: "auto", whiteSpace: "nowrap" }}
+            onClick={() => navigate("/admin-login")}
+          >
+            RE-LOGIN
+          </button>
+        </div>
+      )}
+
       <div className="cr-row">
         <form onSubmit={addTeam} style={{ display: "flex", gap: 12, flex: 1 }}>
           <input className="input" placeholder="new team name…" value={name} onChange={(e) => setName(e.target.value)} />
@@ -35,9 +79,10 @@ export default function Teams() {
       </div>
 
       <div className="cr-table-wrap">
-        {teams.length === 0 ? (
+        {/* Only show "no teams" if there's genuinely no data AND we're not in an auth-error state */}
+        {teams.length === 0 && !authError ? (
           <div className="cr-empty">NO TEAMS REGISTERED YET</div>
-        ) : (
+        ) : teams.length > 0 ? (
           <table className="cr-table">
             <thead>
               <tr>
@@ -50,7 +95,7 @@ export default function Teams() {
               ))}
             </tbody>
           </table>
-        )}
+        ) : null}
       </div>
     </div>
   );
