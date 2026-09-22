@@ -1,0 +1,903 @@
+{
+  "teams": [
+    {
+      "id": "kaNGtyJxxq",
+      "name": "The Patch Panel",
+      "passcode": "Q6ZK3M",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "Tcwi5BM4gy",
+      "name": "Rootkit Renegades",
+      "passcode": "VLNUWA",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "P-PoF-1Icm",
+      "name": "Bandwidth Bandits",
+      "passcode": "YSOQBR",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "Y-06XDsIIo",
+      "name": "Firewall Falcons",
+      "passcode": "YBZ4U7",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "GpieU_QA-q",
+      "name": "Zero Trust Zealots",
+      "passcode": "XRYHZ9",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "7Ncvf1tliR",
+      "name": "The Anomaly Detectors",
+      "passcode": "DTBQ0X",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "_VJTqZaOK0",
+      "name": "Cryptid Coders",
+      "passcode": "CT3TDJ",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "3Akq1EJOdU",
+      "name": "Packet Storm",
+      "passcode": "UPXZYP",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "GyPIXq7S6B",
+      "name": "Brute Force Brigade",
+      "passcode": "EAEMP6",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "adgBqsIll7",
+      "name": "The Air Gap",
+      "passcode": "61HJBY",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "B6zR8Uklnb",
+      "name": "Malicious Compliance",
+      "passcode": "L077JO",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "ZV7q0cZ2LF",
+      "name": "Cyber Wraiths",
+      "passcode": "66M8R6",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "5KMDY0ArBs",
+      "name": "The Sudo Squad",
+      "passcode": "5JUWP8",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "8WX2-pxFTw",
+      "name": "Vector Zero",
+      "passcode": "KSYZD1",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "cPV56Z7kRN",
+      "name": "Ransomware Rebels",
+      "passcode": "4GST77",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "2bN8VUSVPV",
+      "name": "Static Analysis Society",
+      "passcode": "LE5XHB",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "8pic5idNCw",
+      "name": "The Honeytrap Crew",
+      "passcode": "WFIC2D",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "H6OabECLKC",
+      "name": "Digital Forensics Unit",
+      "passcode": "2Q7NT3",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "l6o5Pbn5fx",
+      "name": "Command Line Cartel",
+      "passcode": "IW27CF",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "1iJvPfjboF",
+      "name": "The Byte Reapers",
+      "passcode": "ND6HXY",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "rFnkh1cksW",
+      "name": "Endpoint Enigma",
+      "passcode": "GGVMX0",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "70OSmIe-Bh",
+      "name": "Crimson Firewall",
+      "passcode": "Y1RYBV",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "NCl5mV1vBD",
+      "name": "The Log Analyzers",
+      "passcode": "68NETD",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "kjUhLj2GqY",
+      "name": "Spectre Protocol",
+      "passcode": "ULRT60",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "vr-YpO5Rk4",
+      "name": "Nullbyte Nation",
+      "passcode": "4BKIPQ",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "V1DFCqnhzZ",
+      "name": "The Recon Raiders",
+      "passcode": "6JCOU1",
+      "createdAt": 1790087704522,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "Zh_UYg-HZV",
+      "name": "Cyphered Legion",
+      "passcode": "CV8EZJ",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "ea_v5rW72O",
+      "name": "The Patch Tuesday Club",
+      "passcode": "BKVWJL",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "xvgupKsdLs",
+      "name": "Overflow Outlaws",
+      "passcode": "8IT1TR",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "Tv8AZiHpk9",
+      "name": "The Botnet Busters",
+      "passcode": "M7BSCX",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "myzjP7Z9W5",
+      "name": "Dark Fiber Division",
+      "passcode": "LJQUVW",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "idn-lpAnyj",
+      "name": "The Cold Boot Crew",
+      "passcode": "ARGT3T",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "th-mbmmEG-",
+      "name": "Cyber Cartographers",
+      "passcode": "0ZAT7P",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "Bd9EMkBhAt",
+      "name": "The Man in the Middle",
+      "passcode": "TX5NH7",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "_vIeo8BP1Q",
+      "name": "Ghost Protocol Team",
+      "passcode": "UW0TGL",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "Je9k6r5Fv_",
+      "name": "The Threat Hunters",
+      "passcode": "I0ET3U",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "0AbPx85gQB",
+      "name": "Injection Insurgents",
+      "passcode": "JE5XY5",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "vGfS9QGFqB",
+      "name": "The Whitelist Warriors",
+      "passcode": "YLVN4K",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "vOUomi23Yj",
+      "name": "Sandbox Escapists",
+      "passcode": "OTBRJY",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "8XzBjT1eW_",
+      "name": "The Steganographers",
+      "passcode": "79C5B4",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "oFFHz-rvmK",
+      "name": "Fuzzing Force",
+      "passcode": "261GZD",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "RIYuszq6Jk",
+      "name": "The Perimeter Guard",
+      "passcode": "4ZCW46",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "-dYIpTfWNh",
+      "name": "Token Thieves",
+      "passcode": "BBZW0Y",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "kFJpGx4PVo",
+      "name": "The Anomaly Squad",
+      "passcode": "63Z1QN",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "ZlP2CZx_UK",
+      "name": "Bitwise Bandits",
+      "passcode": "P1MGCJ",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "9BnSV2x0iR",
+      "name": "The Deauth Division",
+      "passcode": "JW3ZMN",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "p4MRwq0WdE",
+      "name": "Packet Sniffers United",
+      "passcode": "5IN5ML",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "DOZKCWtoN2",
+      "name": "The Social Engineers",
+      "passcode": "VN1BM8",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    },
+    {
+      "id": "qnjMsYX9Ez",
+      "name": "Runtime Raiders",
+      "passcode": "RRVR73",
+      "createdAt": 1790087704523,
+      "scores": {
+        "r1": 0,
+        "r2": 0,
+        "r3": 0,
+        "r4": 0,
+        "bonus": 0
+      },
+      "warnings": 0,
+      "violations": 0,
+      "status": "active",
+      "roundProgress": {}
+    }
+  ],
+  "rounds": [
+    {
+      "id": "r1",
+      "key": "cyber-quiz",
+      "name": "Cyber Quiz",
+      "order": 1,
+      "color": "cyan",
+      "maxPoints": 80,
+      "timerMinutes": 15,
+      "status": "locked",
+      "autoStop": true,
+      "startedAt": null,
+      "endsAt": null
+    },
+    {
+      "id": "r2",
+      "key": "crypto-crack",
+      "name": "Crypto Crack",
+      "order": 2,
+      "color": "purple",
+      "maxPoints": 30,
+      "timerMinutes": 25,
+      "status": "locked",
+      "autoStop": true,
+      "startedAt": null,
+      "endsAt": null
+    },
+    {
+      "id": "r3",
+      "key": "bug-hunt",
+      "name": "Bug Hunt",
+      "order": 3,
+      "color": "orange",
+      "maxPoints": 24,
+      "timerMinutes": 30,
+      "status": "locked",
+      "autoStop": true,
+      "startedAt": null,
+      "endsAt": null
+    },
+    {
+      "id": "r4",
+      "key": "cyber-detective",
+      "name": "Cyber Detective",
+      "order": 4,
+      "color": "green",
+      "maxPoints": 66,
+      "timerMinutes": 35,
+      "status": "locked",
+      "autoStop": true,
+      "startedAt": null,
+      "endsAt": null
+    }
+  ],
+  "event": {
+    "standby": true
+  },
+  "violationsLog": [],
+  "judging": {
+    "r3": {}
+  },
+  "sessions": {
+    "p0a5f0qThbnbmeuz4Ta7dS2HyaVQ4otK": {
+      "role": "admin"
+    }
+  }
+}
